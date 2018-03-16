@@ -3,9 +3,12 @@
 <head>
     {% include './app-meta.html' %}
 
-    <link href="/dist/css/fonts.css" rel="stylesheet">
-    <link href="/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/css/src/docs.css" rel="stylesheet">
+    <link rel="preload" href="/dist/css/fonts.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/dist/css/fonts.css"></noscript>
+    <link rel="preload" href="/dist/css/bootstrap.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/dist/css/bootstrap.css"></noscript>
+    <link rel="preload" href="/assets/css/src/docs.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/assets/css/src/docs.css"></noscript>
 
     {% block head_extra %}{% endblock %}
 </head>
