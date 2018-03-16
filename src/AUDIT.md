@@ -39,9 +39,40 @@ expo-vogue.jpg | 2.29 s | 5.02 s
 expo-riot.jpg | 1.95 s | 4.62 s
 expo-newsweek.jpg | 2.19 s | 4.93 s
 
+> overall speed: 5500 ms instead of 8000 ms
+
 Especially the jpg files reduced in seconds, from 4 - 5 seconds to 1 - 2 seconds in loading.
 
 ![compressed images branch](branch.compressed-images.png)
 
+#### Font loading
 
+By using `display:swap;`, the standard font is shown first, while the actual font is loading. This helps the user experience, as the screen isn't empty while the font is loading.
+
+```css
+@font-face {
+    font-family: 'source_sans_pro';
+    src: url('/dist/fonts/sourcesanspro-regular.woff2') format('woff2'),
+    url('/dist/fonts/sourcesanspro-regular.woff') format('woff');
+    display: swap;
+    font-weight: 400;
+    font-style: normal;
+}
+```
+
+#### Load CSS async
+
+Instead of just loading the link like  
+```css
+ <link href="/dist/css/fonts.css" rel="stylesheet">
+ ``` 
+ you can carry this out like this: 
+ ```css
+<link rel="preload" href="/dist/css/fonts.css" as="style" onload="this.rel='stylesheet'">
++    <noscript><link rel="stylesheet" href="/dist/css/fonts.css"></noscript>
+ ```
+
+By referencing CSS with just link + href, browsers delay the page while the CSS is loading. Loading stylesheets that aren't important for the page rendering, the blocking behaviour makes the page load longer for no reason. 
+
+With the rel="preload" way of referring to stylesheets, we are enabled to load stylesheets asynchronously. After this, a <noscript> fallback carries the regular link element.
 
